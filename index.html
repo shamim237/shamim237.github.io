@@ -6,16 +6,21 @@
     <title>Shamim Mahbub - Home</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function showComingSoon() {
+            document.getElementById('coming-soon').style.display = 'block';
+        }
+    </script>
 </head>
 <body>
     <header>
         <div class="container">
             <nav>
                 <ul>
-                    <li><a href="#about">About Me</a></li>
-                    <li><a href="#work">Work Experience</a></li>
+                    <li><a href="#about" onclick="showComingSoon()">About Me</a></li>
+                    <li><a href="#work" onclick="showComingSoon()">Work Experience</a></li>
                     <li><a href="#projects">Projects</a></li>
-                    <li><a href="#publications">Publications</a></li>
+                    <li><a href="#publications" onclick="showComingSoon()">Publications</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -44,6 +49,11 @@
                 <p>Enthusiast of Machine Learning, Deep Learning, Computer Vision, and NLP. I am experienced in image datasets, pattern recognition, object detection, and more. My goal is to solve real-world problems through the integration of Artificial Intelligence.</p>
             </div>
         </div>
+    </section>
+
+    <!-- Coming Soon Message -->
+    <section id="coming-soon" style="display:none; text-align:center; padding: 50px 0;">
+        <h2 style="font-size: 3em; color: #0073e6;">Coming Soon</h2>
     </section>
 </body>
 </html>
