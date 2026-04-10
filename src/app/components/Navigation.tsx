@@ -8,8 +8,9 @@ export function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 8);
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -34,8 +35,8 @@ export function Navigation() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-black/80 backdrop-blur-lg border-b border-white/10' : 'bg-transparent'
+      className={`fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black transition-shadow duration-300 ${
+        isScrolled ? 'shadow-[0_8px_32px_rgba(0,0,0,0.85)]' : ''
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4">
