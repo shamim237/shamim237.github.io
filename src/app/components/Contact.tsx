@@ -192,7 +192,7 @@ export function Contact() {
         transition={{ duration: 0.6, delay: 0.3 }}
         className="max-w-7xl mx-auto px-6 mt-24 pt-8 border-t border-white/10 text-center text-white/40"
       >
-        <p>© 2026 Shamim Mahbub. Built with React, Tailwind CSS, and Motion.</p>
+        <p>© 2026 Shamim Mahbub. Built with love and more.</p>
         <p className="mt-2 text-sm">Dhaka, Bangladesh | sha237mim@gmail.com</p>
       </motion.div>
     </section>
