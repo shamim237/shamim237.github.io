@@ -93,7 +93,7 @@ export function Contact() {
                       <a href="https://github.com/shamim237" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-cyan-400 transition-colors">
                         GitHub
                       </a>
-                      <a href="https://linkedin.com/in/shamim-mahbub" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-cyan-400 transition-colors">
+                      <a href="https://www.linkedin.com/in/shamim237/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-cyan-400 transition-colors">
                         LinkedIn
                       </a>
                       <a href="https://scholar.google.com" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-cyan-400 transition-colors">

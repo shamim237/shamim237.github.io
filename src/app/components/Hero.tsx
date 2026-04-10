@@ -69,7 +69,7 @@ export function Hero() {
               <Github className="text-white" size={24} />
             </motion.a>
             <motion.a
-              href="https://linkedin.com/in/shamim-mahbub"
+              href="https://www.linkedin.com/in/shamim237/"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1, rotate: 5 }}
