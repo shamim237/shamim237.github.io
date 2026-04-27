@@ -22,6 +22,7 @@ export function Navigation() {
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
   ];
+  const resumeUrl = '/Shamim_Mahbub_Resume_GenAI.pdf';
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -62,6 +63,15 @@ export function Navigation() {
                 {item.label}
               </motion.button>
             ))}
+            <motion.a
+              href={resumeUrl}
+              download
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="text-cyan-400 hover:text-cyan-300 transition-colors"
+            >
+              Download CV
+            </motion.a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -90,6 +100,13 @@ export function Navigation() {
                 {item.label}
               </button>
             ))}
+            <a
+              href={resumeUrl}
+              download
+              className="text-cyan-400 hover:text-cyan-300 transition-colors text-left"
+            >
+              Download CV
+            </a>
           </motion.div>
         )}
       </div>
