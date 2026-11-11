@@ -1,6 +1,9 @@
-import { motion } from 'motion/react';
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import { ExternalLink, Github } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { SpotlightCard } from './fx/SpotlightCard';
+import { SectionHeading } from './fx/SectionHeading';
 
 const projects = [
   {
@@ -61,7 +64,7 @@ const projects = [
   },
   {
     title: 'Rice Disease Identification System',
-    description: 'Integrating SVM with deep CNN for rice disease identification and classification. Published research with 141 citations in IEEE ICASERT 2019.',
+    description: 'Integrating SVM with deep CNN for rice disease identification and classification. Published research with 150 citations (Google Scholar) in IEEE ICASERT 2019.',
     image: 'https://images.unsplash.com/photo-1633555412302-152f85ae4fe2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyaWNlJTIwcGxhbnQlMjBkaXNlYXNlJTIwYWdyaWN1bHR1cmV8ZW58MXx8fHwxNzc1NzU3NDY3fDA&ixlib=rb-4.1.0&q=80&w=1080',
     tags: ['Computer Vision', 'SVM', 'CNN', 'Agriculture'],
     github: 'https://github.com/shamim237',
@@ -69,90 +72,115 @@ const projects = [
   },
 ];
 
+const categoryOf: Record<string, string> = {
+  'WhatsApp Agentic E-Commerce Platform': 'Agents',
+  'Enterprise Bid Generation Agent': 'Agents',
+  'MCP-Integrated Enterprise RAG System': 'RAG',
+  'Medical Knowledge Assistant': 'RAG',
+  'GEO Intelligence Platform': 'Evaluation',
+  'Reasoning Model Evaluation Framework': 'Evaluation',
+  'LLM Fine-tuning Pipeline (LoRA/QLoRA)': 'Training',
+  'Rice Disease Identification System': 'Research',
+};
+const filters = ['All', 'Agents', 'RAG', 'Evaluation', 'Training', 'Research'];
+
 export function Projects() {
+  const [filter, setFilter] = useState('All');
+  const visible = projects
+    .map((p, i) => ({ ...p, n: String(i + 1).padStart(2, '0'), category: categoryOf[p.title] ?? 'Other' }))
+    .filter((p) => filter === 'All' || p.category === filter);
+
   return (
-    <section id="projects" className="relative py-24 bg-gradient-to-b from-black to-gray-900">
+    <section id="projects" className="relative py-28">
       <div className="max-w-7xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-            Featured Projects
-          </h2>
-          <p className="text-xl text-white/60 max-w-2xl mx-auto">
-            Building production-grade AI systems with measurable business impact
-          </p>
-        </motion.div>
+        <SectionHeading
+          index="01"
+          label="Projects"
+          title="Featured Projects"
+          subtitle="Production-grade AI systems with measurable business impact"
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -10 }}
-              className="group relative bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-cyan-500/50 transition-all"
+        <div className="flex flex-wrap gap-2 mb-10" role="tablist" aria-label="Filter projects">
+          {filters.map((f) => (
+            <button
+              key={f}
+              role="tab"
+              aria-selected={filter === f}
+              onClick={() => setFilter(f)}
+              className={`relative font-tech text-sm px-4 py-2 rounded-lg border transition-colors cursor-pointer ${
+                filter === f
+                  ? 'text-[#04060d] border-transparent'
+                  : 'text-white/60 border-white/10 hover:text-white hover:border-cyan-400/50'
+              }`}
             >
-              {/* Project Image */}
-              <div className="relative h-64 overflow-hidden">
-                <ImageWithFallback
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              {filter === f && (
+                <motion.span
+                  layoutId="project-filter"
+                  className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-400 to-violet-500"
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-60" />
-              </div>
-
-              {/* Project Content */}
-              <div className="p-6">
-                <h3 className="text-2xl font-bold text-white mb-3">{project.title}</h3>
-                <p className="text-white/70 mb-4 line-clamp-3">{project.description}</p>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.map((tag, tagIndex) => (
-                    <span
-                      key={tagIndex}
-                      className="px-3 py-1 bg-white/10 rounded-full text-sm text-cyan-400 border border-cyan-500/30"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Links */}
-                <div className="flex gap-4">
-                  <motion.a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors text-white"
-                  >
-                    <Github size={18} />
-                    <span>Code</span>
-                  </motion.a>
-                  <motion.a
-                    href={project.demo}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg hover:shadow-lg hover:shadow-purple-500/50 transition-all text-white"
-                  >
-                    <ExternalLink size={18} />
-                    <span>Demo</span>
-                  </motion.a>
-                </div>
-              </div>
-            </motion.div>
+              )}
+              <span className="relative">{f}</span>
+            </button>
           ))}
         </div>
+
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <AnimatePresence mode="popLayout">
+            {visible.map((project) => (
+              <motion.div
+                key={project.title}
+                layout
+                initial={{ opacity: 0, scale: 0.94 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.94 }}
+                transition={{ duration: 0.4 }}
+              >
+                <SpotlightCard tilt className="group h-full flex flex-col">
+                  <div className="relative h-60 overflow-hidden">
+                    <ImageWithFallback
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover opacity-80 saturate-50 group-hover:saturate-100 group-hover:opacity-100 transition-all duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#070914] via-[#070914]/40 to-transparent" />
+                    <div className="absolute inset-0 mix-blend-overlay bg-gradient-to-br from-cyan-500/30 to-violet-600/30" />
+                    <span className="absolute top-4 left-4 font-tech text-xs text-cyan-300 bg-black/50 backdrop-blur px-2.5 py-1 rounded-md border border-cyan-400/30">
+                      {project.n} / {project.category}
+                    </span>
+                  </div>
+
+                  <div className="p-6 flex flex-col flex-1">
+                    <h3 className="font-display text-2xl font-bold text-white mb-3">{project.title}</h3>
+                    <p className="text-white/65 mb-5 line-clamp-3 flex-1">{project.description}</p>
+
+                    <div className="flex flex-wrap gap-2 mb-5">
+                      {project.tags.map((tag) => (
+                        <span key={tag} className="chip font-tech">{tag}</span>
+                      ))}
+                    </div>
+
+                    <div className="flex gap-3">
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-ghost !py-2 !px-4 text-sm"
+                      >
+                        <Github size={16} />
+                        Code
+                      </a>
+                      <a href={project.demo} className="btn-neon !py-2 !px-4 text-sm">
+                        <ExternalLink size={16} />
+                        Demo
+                      </a>
+                    </div>
+                  </div>
+                </SpotlightCard>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );
